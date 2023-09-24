@@ -26,7 +26,7 @@ class MoviesViewSetTestCase(APITestCase):
         }
 
     def test_list_movies(self):
-        url = reverse('movie-list-create')
+        url = reverse('movie-list')
         response = self.client.get(url, headers = self.get_headers())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -36,7 +36,7 @@ class MoviesViewSetTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_movie(self):
-        url = reverse('movie-list-create')
+        url = reverse('movie-list')
         response = self.client.post(url, self.movie_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -52,12 +52,12 @@ class MoviesViewSetTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_filter_movies_by_genre(self):
-        url = reverse('movie-list-create') + '?genre=Test Genre'
+        url = reverse('movie-list') + '?genre=Test Genre'
         response = self.client.get(url, headers = self.get_headers())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_filter_movies_by_director(self):
-        url = reverse('movie-list-create') + '?director=Test Director'
+        url = reverse('movie-list') + '?director=Test Director'
         response = self.client.get(url, headers = self.get_headers())
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -68,7 +68,7 @@ class MoviesViewSetTestCase(APITestCase):
             'release_date': '2023-09-23',
             'director': 'Test Director',
         }
-        url = reverse('movie-list-create')
+        url = reverse('movie-list')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -79,7 +79,7 @@ class MoviesViewSetTestCase(APITestCase):
             'release_date': '2023-09-23',
             'director': 'Test Director',
         }
-        url = reverse('movie-list-create')
+        url = reverse('movie-list')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -90,7 +90,7 @@ class MoviesViewSetTestCase(APITestCase):
             'release_date': '2023/09/23',
             'director': 'Test Director',
         }
-        url = reverse('movie-list-create')
+        url = reverse('movie-list')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -101,6 +101,6 @@ class MoviesViewSetTestCase(APITestCase):
             'release_date': '2023-09-23',
             'director': 'A' * 101,
         }
-        url = reverse('movie-list-create')
+        url = reverse('movie-list')
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
